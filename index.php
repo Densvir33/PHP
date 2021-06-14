@@ -1,15 +1,16 @@
 <?php require_once "connection_database.php"; ?>
 <?php include "_head.php"; ?>
+
 <?php include "modal.php"; ?>
-<div class="container" style="color: white">
-    <h1>All existing animals</h1>
-    <a class="btn btn-success" href="addAnimal.php">Add new animals to shop</a>
-    <table class="table table-success" style="color: white; margin-top: 20px; font-size: 16px; font-family: 'Cambria Math'">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Animals</th>
-            <th>Price</th>
+    <div class="container" style="color: white">
+        <h1>All existing animals</h1>
+        <a class="btn btn-success" href="addAnimal.php">Add new animals to shop</a>
+        <table class="table table-success" style="color: white; margin-top: 20px; font-size: 16px; font-family: 'Cambria Math'">
+            <thead>
+            <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>image</th>
             <th></th>
             <th></th>
         </tr>
@@ -21,25 +22,32 @@
         {
             echo"
             <tr>
-            <td><b>{$row["id"]}</b></td>
-            <td><b>{$row["name"]}</b></td>
-            <td><b>{$row["image"]}</b></td>
-            <td></td>
+            <td>{$row["id"]}</td>
+            <td>{$row["name"]}</td>
+            <td><img style='width: 200px; height=200px;' src='{$row["image"]}' class='img-thumbnail' alt='Animal image'></td>
+            <td><a class='btn btn-dark' href='editAnimal.php?id=${row["id"]}'>Edit  <i class='far fa-edit'></i></td>
             <td>
-            <a class='btn btn-light' href='editAnimal.php?id=${row["id"]}'>Edit  <i class='far fa-edit'></i></a>
-                <button  onclick='loadDeleteModal(${row["id"]})' data-toggle='modal' data-target='#modalDelete' class='btn btn-danger'>Delete<i class='fas fa-trash-alt'></i></button>
+                <button  onclick='loadDeleteModal(${row["id"]}, `${row["name"]}`)' data-toggle='modal' data-target='#modalDelete' class='btn btn-danger' >Delete  <i class='fas fa-trash-alt'></i></button>
             </td>
             </tr>";
         }
+
         ?>
     </table>
     </div>
+
+
+   <!-- <form action='deleteAnimal.php' method='post'>
+        <input type='hidden' name='id' value='${row["id"]}'>
+        <button  type='submit' class='btn btn-danger' >Delete  <i class='fas fa-trash-alt'></i></button>
+    </form>-->
+
 <script>
-    function loadDeleteModal(id)
+    function loadDeleteModal(id, name)
     {
         $(`#modalDeleteContent`).empty();
         $(`#modalDeleteContent`).append(`<div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete animal ${id}?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Delete animal ${name}?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

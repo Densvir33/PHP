@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $command = $dbh->prepare("DELETE FROM animals WHERE animals.id = :id");
     $command->bindParam(':id', $id);
     $command->execute();
-    echo "Id:".$id;
 }
 
 header("Location: index.php");
